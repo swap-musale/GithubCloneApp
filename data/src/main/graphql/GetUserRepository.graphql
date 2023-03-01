@@ -1,0 +1,26 @@
+query GetUserInfo {
+    viewer {
+        avatarUrl
+        email
+        location
+        name
+        repositories(affiliations: OWNER, first: 100) {
+            nodes {
+                createdAt
+                description
+                name
+                isPrivate
+                primaryLanguage {
+                    name
+                    color
+                    id
+                }
+                url
+            }
+            totalCount
+        }
+        url
+        company
+        websiteUrl
+    }
+}

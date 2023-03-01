@@ -1,17 +1,21 @@
 package com.example.githubcloneapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.example.githubcloneapp.ui.auth.AuthenticationScreen
+import com.example.githubcloneapp.ui.auth.AuthenticationVM
 import com.example.githubcloneapp.ui.theme.GithubCloneAppTheme
 import com.example.githubcloneapp.util.Constant
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val authViewModel: AuthenticationVM by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AuthenticationScreen()
+                    AuthenticationScreen(authViewModel = authViewModel)
                 }
             }
         }
@@ -30,11 +34,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-
         intent.data?.let { uriData ->
-            if (uriData.toString().startsWith(Constant.CALLBACK_URL) && uriData.getBooleanQueryParameter("code", false)) {
+            if (uriData.toString().startsWith(Constant.CALLBACK_URL) &&
+                uriData.getBooleanQueryParameter("code", false)
+            ) {
                 val authorizationCode = uriData.getQueryParameter("code")
-                Log.d("TAG", "authorizationCode: $authorizationCode")
+                if (authorizationCode?.isNotEmpty() == true) {
+                    authViewModel.getUserAccessToken(authorizationCode = authorizationCode)
+                }
             }
         }
     }
