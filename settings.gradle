@@ -12,5 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "GithubCloneApp"
+rootProject.name = "GHClone"
 include ':app'
+include ':data'
+include ':domain'
