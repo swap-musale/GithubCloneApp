@@ -1,0 +1,5 @@
+query GetUserName {
+    viewer {
+        login
+    }
+}
