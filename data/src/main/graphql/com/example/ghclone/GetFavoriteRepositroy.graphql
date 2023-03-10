@@ -1,0 +1,17 @@
+query getFavoriteRepository {
+    viewer {
+        repositories(affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], first: 50) {
+            totalCount
+            nodes {
+                name
+                nameWithOwner
+                url
+                viewerHasStarred
+                owner {
+                    avatarUrl(size: 1)
+                    login
+                }
+            }
+        }
+    }
+}

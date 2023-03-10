@@ -8,73 +8,86 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.data.Constants
-import com.example.ghclone.ui.screens.AuthScreen
-import com.example.ghclone.ui.screens.ProfileScreen
+import com.example.ghclone.navigation.AppNav
+import com.example.ghclone.navigation.AppNavHost
+import com.example.ghclone.navigation.BottomNavigationBar
+import com.example.ghclone.ui.auth.AuthViewModel
 import com.example.ghclone.ui.theme.GHCloneTheme
-import com.example.ghclone.viewmodels.MainViewModel
-import org.koin.android.ext.android.get
-
 
 class MainActivity : ComponentActivity() {
-    private val mainViewModel = get<MainViewModel>()
-    private val mCustomTabLauncher =
-        registerForActivityResult(
-            object : ActivityResultContract<String?, Int?>() {
-                override fun parseResult(resultCode: Int, intent: Intent?): Int {
-                    return resultCode
-                }
 
-                override fun createIntent(context: Context, input: String?): Intent {
-                    val builder = CustomTabsIntent.Builder()
-                        .setInitialActivityHeightPx(
-                            resources.displayMetrics.heightPixels.times(0.75f).toInt()
-                        )
-                        .setCloseButtonPosition(CustomTabsIntent.CLOSE_BUTTON_POSITION_END)
-                        .setToolbarCornerRadiusDp(10)
-                    val customTabsIntent = builder.build().intent
-                    with(customTabsIntent) {
-                        data = Uri.parse(input)
-                        setPackage("com.android.chrome")
-                    }
-                    return customTabsIntent
-                }
+    private lateinit var authViewModel: AuthViewModel
+    private val customTabLauncher =
+        registerForActivityResult(object : ActivityResultContract<String?, Int?>() {
+            override fun parseResult(resultCode: Int, intent: Intent?): Int {
+                return resultCode
             }
-        ) {}
 
-    @OptIn(ExperimentalAnimationApi::class)
+            override fun createIntent(context: Context, input: String?): Intent {
+                val builder = CustomTabsIntent.Builder()
+                    .setInitialActivityHeightPx(
+                        resources.displayMetrics.heightPixels.times(other = 0.75f).toInt(),
+                    )
+                    .setCloseButtonPosition(CustomTabsIntent.CLOSE_BUTTON_POSITION_END)
+                    .setToolbarCornerRadiusDp(12)
+                val customTabsIntent = builder.build().intent
+                with(customTabsIntent) {
+                    data = Uri.parse(input)
+                    setPackage("com.android.chrome")
+                }
+                return customTabsIntent
+            }
+        }) {}
+
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             GHCloneTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    val isLoggedInState = mainViewModel.isLoggedIn.collectAsState()
-                    val authState by mainViewModel.authState.collectAsState()
-                    val userState by mainViewModel.profileState.collectAsState()
-
-                    AnimatedContent(targetState = isLoggedInState.value) { isLoggedIn ->
-                        if (isLoggedIn == true) {
-                            ProfileScreen(
-                                userState = userState,
-                                fetchUser = mainViewModel::getUser
-                            )
-                        } else {
-                            AuthScreen(authState = authState) {
-                                mCustomTabLauncher.launch(Constants.AuthorizeUrl)
+                    val navController = rememberNavController()
+                    Scaffold(
+                        bottomBar = {
+                            val navBackStackEntry by navController.currentBackStackEntryAsState()
+                            AnimatedVisibility(
+                                visible = navBackStackEntry?.destination?.route != AppNav.AuthScreen.route &&
+                                    navBackStackEntry?.destination?.route != null,
+                                enter = fadeIn() + slideInVertically(),
+                                exit = fadeOut() + slideOutHorizontally(),
+                            ) {
+                                BottomNavigationBar(navController = navController)
                             }
-                        }
+                        },
+                    ) { paddingValues ->
+                        AppNavHost(
+                            modifier = Modifier.padding(paddingValues = paddingValues),
+                            navController = navController,
+                            initAuthFlow = {
+                                authViewModel = it
+                                customTabLauncher.launch(Constants.AuthorizeUrl)
+                            },
+                        )
                     }
                 }
             }
@@ -84,7 +97,9 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.data?.getQueryParameter("code")?.let { code ->
-            mainViewModel.authenticate(code = code)
+            if (::authViewModel.isInitialized) {
+                authViewModel.authenticate(code = code)
+            }
         }
     }
 }

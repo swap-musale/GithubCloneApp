@@ -7,22 +7,23 @@ import com.example.data.BuildConfig
 import com.example.data.Constants
 import com.example.data.models.AuthResponse
 import com.example.domain.repositories.AuthRepository
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class AuthRepositoryImpl(
     private val dataStore: DataStore<Preferences>,
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
 ) : AuthRepository {
     override fun isLoggedIn(): Flow<Boolean> {
         return dataStore.data.map { it[Constants.AccessTokenKey] != null }
     }
 
-    override suspend fun getTokens(code: String) {
+    override suspend fun getTokens(code: String): String {
         val response = httpClient.post(Constants.AccessTokenUrl) {
             parameter("client_id", BuildConfig.ghClientID)
             parameter("client_secret", BuildConfig.ghClientSecret)
@@ -39,10 +40,9 @@ class AuthRepositoryImpl(
                     prefs[Constants.RefreshTokenKey] = it
                 }
             }
-        } else throw Exception("Unexpected error occurred! Please try again later.")
-    }
-
-    override suspend fun logout() {
-        dataStore.edit { it.clear() }
+            return data.accessToken.orEmpty()
+        } else {
+            throw Exception("Unexpected error occurred! Please try again later.")
+        }
     }
 }

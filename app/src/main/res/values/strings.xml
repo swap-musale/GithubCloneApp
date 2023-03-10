@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GHClone</string>
+    <string name="add_favorite_repository_display_message">Add favorite repositories for quick access at any time, without having to search</string>
 </resources>

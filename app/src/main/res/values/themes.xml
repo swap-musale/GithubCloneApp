@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.GHClone" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/github_logo_day</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.GHClone</item>
+    </style>
 </resources>
