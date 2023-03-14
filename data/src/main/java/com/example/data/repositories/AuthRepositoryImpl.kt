@@ -25,10 +25,10 @@ class AuthRepositoryImpl(
 
     override suspend fun getTokens(code: String): String {
         val response = httpClient.post(Constants.AccessTokenUrl) {
-            parameter("client_id", BuildConfig.ghClientID)
-            parameter("client_secret", BuildConfig.ghClientSecret)
-            parameter("code", code)
-            parameter("redirect_uri", BuildConfig.ghCallbackUrl)
+            parameter(Constants.CLIENT_ID_PARAM, BuildConfig.ghClientID)
+            parameter(Constants.CLIENT_SECRET_PARAM, BuildConfig.ghClientSecret)
+            parameter(Constants.CODE_PARAM, code)
+            parameter(Constants.REDIRECT_URI_PARAM, BuildConfig.ghCallbackUrl)
         }
         if (response.status == HttpStatusCode.OK) {
             val data = response.body<AuthResponse>()

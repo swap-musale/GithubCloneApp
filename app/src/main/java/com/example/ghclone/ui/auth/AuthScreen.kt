@@ -24,7 +24,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.UrlAnnotation
@@ -40,13 +42,17 @@ import com.example.ghclone.R
 import com.example.ghclone.ui.theme.GHCloneTheme
 import com.example.ghclone.utils.UIState
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalTextApi::class)
+@OptIn(
+    ExperimentalAnimationApi::class,
+    ExperimentalTextApi::class,
+)
 @Composable
 fun AuthScreen(
     authState: UIState<String>,
     initAuthFlow: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
+    val context = LocalContext.current
     LaunchedEffect(key1 = authState) {
         if (authState is UIState.Success) {
             navigateToHome()
@@ -97,7 +103,7 @@ fun AuthScreen(
                         )
                     } else {
                         Text(
-                            text = "SIGN IN WITH GITHUB",
+                            text = stringResource(R.string.str_sign_in_with_github),
                             color = MaterialTheme.colorScheme.surface,
                             fontWeight = FontWeight.Medium,
                         )
@@ -111,15 +117,17 @@ fun AuthScreen(
                         color = MaterialTheme.colorScheme.primary,
                         textDecoration = TextDecoration.Underline,
                     )
-                    append("By signing in you accept our ")
+                    append(stringResource(R.string.by_signing_accept_conditions))
                     withStyle(style = linkStyle) {
                         withAnnotation(urlAnnotation = UrlAnnotation("www.github.com")) {
-                            append("Terms of use")
+                            append(context.getString(R.string.str_terms_of_use))
                         }
                     }
                     append(" and ")
                     withAnnotation(urlAnnotation = UrlAnnotation("www.github.com")) {
-                        withStyle(style = linkStyle) { append("Privacy policy") }
+                        withStyle(style = linkStyle) {
+                            append(context.getString(R.string.str_provacy_policy))
+                        }
                     }
                     append(".")
                 },

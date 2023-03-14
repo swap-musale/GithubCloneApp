@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">GHClone</string>
     <string name="add_favorite_repository_display_message">Add favorite repositories for quick access at any time, without having to search</string>
+    
+    <string name="tab_home">Home</string>
+    <string name="tab_notifications">Notifications</string>
+    <string name="tab_explore">Explore</string>
+    <string name="tab_profile">Profile</string>
+    <string name="str_favorite">Favorites</string>
+    <string name="str_add_favorite">ADD FAVORITES</string>
+    <string name="home_toolbar_title">Home</string>
+    <string name="str_my_work">My Work</string>
+    <string name="things_you_need_one_tap_away">The things you need, one tap away</string>
+    <string name="fast_access_your_issues">Fast access your lists if Issues, Pull Requests, or Discussions</string>
+    <string name="str_get_started">GET STARTED</string>
+    <string name="str_sign_in_with_github">SIGN IN WITH GITHUB</string>
+    <string name="str_provacy_policy">Privacy policy</string>
+    <string name="str_terms_of_use">Terms of use</string>
+    <string name="by_signing_accept_conditions">\"By signing in you accept our \"</string>
 </resources>

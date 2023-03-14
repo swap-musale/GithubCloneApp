@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.ghclone.R
@@ -23,12 +24,12 @@ fun BottomNavigationBar(navController: NavHostController) {
                 selectedContentColor = colorResource(id = R.color.blue),
                 unselectedContentColor = colorResource(id = R.color.divider_grey),
                 selected = currentRoute == navItem.route,
-                label = { Text(text = navItem.label) },
+                label = { Text(text = stringResource(id = navItem.label)) },
                 onClick = { navController.navigate(route = navItem.route) },
                 icon = {
                     Icon(
                         painter = painterResource(id = navItem.icon),
-                        contentDescription = navItem.label,
+                        contentDescription = stringResource(id = navItem.label),
                         tint = if (currentRoute == navItem.route) {
                             colorResource(id = R.color.blue)
                         } else {
