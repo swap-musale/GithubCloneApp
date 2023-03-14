@@ -37,9 +37,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withAnnotation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.ghclone.R
 import com.example.ghclone.ui.theme.GHCloneTheme
+import com.example.ghclone.ui.theme.spacing
 import com.example.ghclone.utils.UIState
 
 @OptIn(
@@ -66,9 +66,9 @@ fun AuthScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(space = 16.dp),
+                .padding(bottom = MaterialTheme.spacing.large)
+                .padding(horizontal = MaterialTheme.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(space = MaterialTheme.spacing.large),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
@@ -89,7 +89,7 @@ fun AuthScreen(
                     .fillMaxWidth(),
                 onClick = initAuthFlow,
                 enabled = authState !is UIState.Loading,
-                shape = RoundedCornerShape(size = 8.dp),
+                shape = RoundedCornerShape(size = MaterialTheme.spacing.medium),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onSurface),
             ) {
                 AnimatedContent(
@@ -97,9 +97,9 @@ fun AuthScreen(
                 ) { isLoading ->
                     if (isLoading) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(size = 16.dp),
+                            modifier = Modifier.size(size = MaterialTheme.spacing.large),
                             color = MaterialTheme.colorScheme.onSurface,
-                            strokeWidth = 2.dp,
+                            strokeWidth = MaterialTheme.spacing.default,
                         )
                     } else {
                         Text(

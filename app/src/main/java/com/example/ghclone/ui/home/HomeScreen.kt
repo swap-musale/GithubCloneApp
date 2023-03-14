@@ -23,6 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,6 +48,7 @@ import com.example.ghclone.ui.home.component.HomeTopHeaderView
 import com.example.ghclone.ui.home.component.MyWorkOptionsView
 import com.example.ghclone.ui.home.component.QuickShortcutsView
 import com.example.ghclone.ui.theme.GHCloneTheme
+import com.example.ghclone.ui.theme.spacing
 import com.example.ghclone.utils.UIState
 
 const val MY_WORK_VIEW_TAG = "my_work"
@@ -136,14 +138,14 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 15.dp),
+            .padding(vertical = MaterialTheme.spacing.large),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.padding(start = 20.dp),
+                modifier = Modifier.padding(start = MaterialTheme.spacing.extraLarge),
                 text = stringResource(id = R.string.str_favorite),
                 color = colorResource(id = R.color.black),
                 fontSize = 15.sp,
@@ -153,7 +155,7 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
             if (starredRepoList.isNotEmpty()) {
                 Spacer(modifier = Modifier.weight(weight = 1f))
                 Image(
-                    modifier = Modifier.padding(end = 20.dp),
+                    modifier = Modifier.padding(end = MaterialTheme.spacing.large),
                     painter = painterResource(id = R.drawable.ic_more_horizontal),
                     colorFilter = ColorFilter.tint(color = colorResource(id = R.color.grey)),
                     contentDescription = "ic_more_horizontal",
@@ -170,14 +172,14 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp),
+                        .padding(top = MaterialTheme.spacing.small),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (LocalInspectionMode.current) {
                         Image(
                             modifier = Modifier
-                                .padding(start = 20.dp)
-                                .size(size = 35.dp)
+                                .padding(start = MaterialTheme.spacing.large)
+                                .size(size = MaterialTheme.spacing.extraExtraLarge)
                                 .clip(shape = CircleShape),
                             painter = painterResource(id = R.drawable.ic_repositories),
                             contentDescription = null,
@@ -185,8 +187,8 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
                     } else {
                         AsyncImage(
                             modifier = Modifier
-                                .padding(start = 20.dp)
-                                .size(size = 35.dp)
+                                .padding(start = MaterialTheme.spacing.large)
+                                .size(size = MaterialTheme.spacing.extraExtraLarge)
                                 .clip(shape = CircleShape),
                             model = repositoryNode.owner.avatarUrl,
                             contentDescription = null,
@@ -196,7 +198,7 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                            .padding(horizontal = MaterialTheme.spacing.medium),
                     ) {
                         Text(
                             text = repositoryNode.owner.login,
@@ -204,7 +206,7 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
                         )
                         Text(
                             text = repositoryNode.name,
-                            modifier = Modifier.padding(top = 2.dp),
+                            modifier = Modifier.padding(top = MaterialTheme.spacing.default),
                         )
                     }
                 }
@@ -215,7 +217,10 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 15.dp),
+                    .padding(
+                        horizontal = MaterialTheme.spacing.large,
+                        vertical = MaterialTheme.spacing.extraLarge,
+                    ),
                 text = stringResource(id = R.string.add_favorite_repository_display_message),
                 color = colorResource(id = R.color.grey),
                 textAlign = TextAlign.Center,
@@ -223,7 +228,7 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
 
             Button(
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.white)),
-                shape = RoundedCornerShape(size = 6.dp),
+                shape = RoundedCornerShape(size = MaterialTheme.spacing.small),
                 elevation = ButtonDefaults.elevatedButtonElevation(),
                 border = BorderStroke(
                     width = 0.5.dp,
@@ -231,11 +236,11 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = MaterialTheme.spacing.large),
                 onClick = { },
             ) {
                 Text(
-                    modifier = Modifier.padding(vertical = 4.dp),
+                    modifier = Modifier.padding(vertical = MaterialTheme.spacing.extraSmall),
                     text = stringResource(id = R.string.str_add_favorite),
                     color = colorResource(id = R.color.blue),
                 )
@@ -246,7 +251,7 @@ fun FavoriteRepositoryView(starredRepoList: List<RepositoryNode>) {
             thickness = 0.6.dp,
             color = colorResource(id = R.color.divider_grey),
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = MaterialTheme.spacing.large)
                 .fillMaxWidth(),
         )
     }

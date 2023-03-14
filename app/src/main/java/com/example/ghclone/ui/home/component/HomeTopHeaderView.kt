@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ghclone.R
 import com.example.ghclone.ui.theme.GHCloneTheme
+import com.example.ghclone.ui.theme.spacing
 
 @Composable
 fun HomeTopHeaderView(
@@ -38,7 +39,10 @@ fun HomeTopHeaderView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = 15.dp, vertical = 20.dp),
+                modifier = Modifier.padding(
+                    horizontal = MaterialTheme.spacing.large,
+                    vertical = MaterialTheme.spacing.extraLarge,
+                ),
                 text = stringResource(id = R.string.home_toolbar_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -57,7 +61,7 @@ fun HomeTopHeaderView(
                 }
 
                 IconButton(
-                    modifier = Modifier.padding(end = 5.dp),
+                    modifier = Modifier.padding(end = MaterialTheme.spacing.small),
                     onClick = { onCreateIssueClicked() },
                 ) {
                     Icon(

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,11 +25,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ghclone.R
 import com.example.ghclone.ui.home.MY_WORK_VIEW_TAG
 import com.example.ghclone.ui.home.WorkOption
+import com.example.ghclone.ui.theme.spacing
 
 @Composable
 fun MyWorkOptionsView(myWorkOptionsList: List<WorkOption>) {
@@ -36,7 +37,7 @@ fun MyWorkOptionsView(myWorkOptionsList: List<WorkOption>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 15.dp),
+                .padding(horizontal = MaterialTheme.spacing.large),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -82,18 +83,22 @@ fun MyWorkOptionItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, end = 15.dp, top = 15.dp),
+                .padding(
+                    start = MaterialTheme.spacing.large,
+                    end = MaterialTheme.spacing.large,
+                    top = MaterialTheme.spacing.large,
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(size = 6.dp))
+                    .clip(shape = RoundedCornerShape(size = MaterialTheme.spacing.small))
                     .background(color = colorResource(id = myWorkOption.backgroundColor)),
             ) {
                 Image(
                     modifier = Modifier
-                        .padding(all = 8.dp)
-                        .size(size = 20.dp),
+                        .padding(all = MaterialTheme.spacing.small)
+                        .size(size = MaterialTheme.spacing.extraLarge),
                     colorFilter = ColorFilter.tint(color = colorResource(id = R.color.white)),
                     painter = painterResource(id = myWorkOption.icon),
                     contentDescription = myWorkOption.title,
@@ -103,7 +108,7 @@ fun MyWorkOptionItem(
             Text(
                 text = myWorkOption.title,
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier.padding(start = MaterialTheme.spacing.medium),
             )
         }
     }

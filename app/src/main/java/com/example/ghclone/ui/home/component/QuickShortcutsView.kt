@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.example.ghclone.R
 import com.example.ghclone.ui.home.ShortcutOption
 import com.example.ghclone.ui.theme.GHCloneTheme
+import com.example.ghclone.ui.theme.spacing
 
 @Composable
 fun QuickShortcutsView() {
@@ -50,10 +51,10 @@ fun QuickShortcutsView() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 30.dp),
+            .padding(bottom = MaterialTheme.spacing.extraExtraLarge),
     ) {
         Text(
-            modifier = Modifier.padding(start = 20.dp),
+            modifier = Modifier.padding(start = MaterialTheme.spacing.extraLarge),
             text = "Shortcuts",
             color = MaterialTheme.colorScheme.onSurface,
             fontSize = 15.sp,
@@ -63,7 +64,7 @@ fun QuickShortcutsView() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 35.dp),
+                .padding(top = MaterialTheme.spacing.extraExtraLarge),
             horizontalArrangement = Arrangement.Center,
         ) {
             shortcutList.forEach {
@@ -74,8 +75,8 @@ fun QuickShortcutsView() {
                 ) {
                     Image(
                         modifier = Modifier
-                            .padding(all = 6.dp)
-                            .size(size = 18.dp),
+                            .padding(all = MaterialTheme.spacing.small)
+                            .size(size = MaterialTheme.spacing.large),
                         colorFilter = ColorFilter.tint(color = colorResource(id = it.iconColor)),
                         painter = painterResource(id = it.icon),
                         contentDescription = null,
@@ -90,7 +91,7 @@ fun QuickShortcutsView() {
             fontWeight = FontWeight.Medium,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp),
+                .padding(top = MaterialTheme.spacing.small),
         )
 
         Text(
@@ -99,12 +100,12 @@ fun QuickShortcutsView() {
             text = stringResource(R.string.fast_access_your_issues),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp),
+                .padding(top = MaterialTheme.spacing.medium),
         )
 
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.white)),
-            shape = RoundedCornerShape(size = 6.dp),
+            shape = RoundedCornerShape(size = MaterialTheme.spacing.small),
             elevation = ButtonDefaults.elevatedButtonElevation(),
             border = BorderStroke(
                 width = 0.5.dp,
@@ -112,11 +113,14 @@ fun QuickShortcutsView() {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp, horizontal = 20.dp),
+                .padding(
+                    vertical = MaterialTheme.spacing.small,
+                    horizontal = MaterialTheme.spacing.small,
+                ),
             onClick = { },
         ) {
             Text(
-                modifier = Modifier.padding(vertical = 4.dp),
+                modifier = Modifier.padding(vertical = MaterialTheme.spacing.extraSmall),
                 text = stringResource(R.string.str_get_started),
                 color = colorResource(id = R.color.blue),
             )
