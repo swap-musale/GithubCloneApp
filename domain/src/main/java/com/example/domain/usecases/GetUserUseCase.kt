@@ -1,10 +1,10 @@
 package com.example.domain.usecases
 
-import com.example.domain.Resource
 import com.example.domain.entities.User
-import com.example.domain.repositories.UserRepository
-import com.example.domain.safeCall
+import com.example.domain.repositories.GithubRepository
+import com.example.domain.utils.Resource
+import com.example.domain.utils.safeCall
 
-class GetUserUseCase(private val userRepository: UserRepository) {
-    suspend operator fun invoke(): Resource<User> = safeCall { userRepository.getUser() }
+class GetUserUseCase(private val githubRepository: GithubRepository) {
+    suspend operator fun invoke(): Resource<User> = safeCall { githubRepository.getUser() }
 }
