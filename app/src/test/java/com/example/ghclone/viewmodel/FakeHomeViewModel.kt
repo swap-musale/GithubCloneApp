@@ -10,8 +10,8 @@ import com.example.ghclone.utils.UIState
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
@@ -30,7 +30,7 @@ class FakeHomeViewModel {
     }
 
     @Test
-    fun onHomeLaunch_CallFavApi_OnSuccessReturnsTrue() = runBlocking {
+    fun onHomeLaunch_CallFavApi_OnSuccessReturnsTrue() = runTest {
         githubRepository = FakeGithubRepositoryImpl()
         getFavoriteRepositoryUseCase =
             GetFavoriteRepositoryUseCase(githubRepository = githubRepository)
@@ -46,7 +46,7 @@ class FakeHomeViewModel {
     }
 
     @Test
-    fun onHomeLaunch_OnFavRepoApiSuccess_OnSuccessReturnsFalse() = runBlocking {
+    fun onHomeLaunch_OnFavRepoApiSuccess_OnSuccessReturnsFalse() = runTest {
         githubRepository = FakeGithubRepositoryImpl()
         getFavoriteRepositoryUseCase =
             GetFavoriteRepositoryUseCase(githubRepository = githubRepository)

@@ -5,7 +5,7 @@ import com.example.domain.usecases.GetTokenUseCase
 import com.example.domain.utils.Resource
 import com.example.ghclone.repository.FakeAuthRepositoryImpl
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class GetTokenUseCaseTest {
@@ -14,7 +14,7 @@ class GetTokenUseCaseTest {
     lateinit var getTokenUseCase: GetTokenUseCase
 
     @Test
-    fun ifAccessTokenNotEmptyReturnsTrue() = runBlocking {
+    fun ifAccessTokenNotEmptyReturnsTrue() = runTest {
         authRepository = FakeAuthRepositoryImpl(shouldSucceed = true)
         getTokenUseCase = GetTokenUseCase(authRepository = authRepository)
         val result = getTokenUseCase("code")
@@ -24,7 +24,7 @@ class GetTokenUseCaseTest {
     }
 
     @Test
-    fun ifAccessTokenNotEmptyReturnsFalse() = runBlocking {
+    fun ifAccessTokenNotEmptyReturnsFalse() = runTest {
         authRepository = FakeAuthRepositoryImpl(shouldSucceed = false)
         getTokenUseCase = GetTokenUseCase(authRepository = authRepository)
         val result = getTokenUseCase("code")

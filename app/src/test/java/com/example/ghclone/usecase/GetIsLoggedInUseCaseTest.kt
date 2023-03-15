@@ -5,7 +5,7 @@ import com.example.domain.usecases.GetIsLoggedInUseCase
 import com.example.ghclone.repository.FakeAuthRepositoryImpl
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class GetIsLoggedInUseCaseTest {
@@ -14,7 +14,7 @@ class GetIsLoggedInUseCaseTest {
     lateinit var getIsLoggedInUseCase: GetIsLoggedInUseCase
 
     @Test
-    fun isUserLoggedInReturnTrue() = runBlocking {
+    fun isUserLoggedInReturnTrue() = runTest {
         authRepository = FakeAuthRepositoryImpl(shouldSucceed = true)
         getIsLoggedInUseCase = GetIsLoggedInUseCase(authRepository = authRepository)
         val result = getIsLoggedInUseCase().first()
@@ -22,7 +22,7 @@ class GetIsLoggedInUseCaseTest {
     }
 
     @Test
-    fun isUserNotLoggedInReturnFalse() = runBlocking {
+    fun isUserNotLoggedInReturnFalse() = runTest {
         authRepository = FakeAuthRepositoryImpl(shouldSucceed = false)
         getIsLoggedInUseCase = GetIsLoggedInUseCase(authRepository = authRepository)
         val result = getIsLoggedInUseCase().first()

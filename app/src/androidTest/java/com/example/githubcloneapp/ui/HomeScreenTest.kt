@@ -1,5 +1,6 @@
 package com.example.githubcloneapp.ui
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertAny
 import androidx.compose.ui.test.assertCountEquals
@@ -34,28 +35,34 @@ class HomeScreenTest {
 
     @Test
     fun homeScreen_isHeaderTitleCorrect() {
+        var titleText = ""
         composeTestRule.setContent {
+            titleText = stringResource(id = R.string.home_toolbar_title)
             HomeScreen(favoriteRepositoryState = UIState.Empty)
         }
-        composeTestRule.onNode(hasText("Home"))
+        composeTestRule.onNode(hasText(text = titleText))
     }
 
     @Test
     fun onAppLaunch_isMyWorkSectionVisible() {
+        var myWorkText = ""
         composeTestRule.setContent {
+            myWorkText = stringResource(id = R.string.str_my_work)
             HomeScreen(favoriteRepositoryState = UIState.Empty)
         }
 
-        composeTestRule.onNodeWithText("My Work").assertExists()
+        composeTestRule.onNodeWithText(text = myWorkText).assertExists()
     }
 
     @Test
     fun onAppLaunch_ifMyWorkListEmpty() {
+        var myWorkText = ""
         composeTestRule.setContent {
+            myWorkText = stringResource(id = R.string.str_my_work)
             MyWorkOptionsView(myWorkOptionsList = emptyList())
         }
 
-        composeTestRule.onNodeWithText("My Work").assertExists()
+        composeTestRule.onNodeWithText(text = myWorkText).assertExists()
         composeTestRule.onNodeWithTag(testTag = MY_WORK_VIEW_TAG)
             .onChildren()
             .assertCountEquals(0)
@@ -63,6 +70,7 @@ class HomeScreenTest {
 
     @Test
     fun onAppLaunch_myWorkVerifyFirstOption() {
+        var issuesText = ""
         val myWorkOptionsList = listOf(
             WorkOption(
                 title = "Issues",
@@ -78,17 +86,18 @@ class HomeScreenTest {
             ),
         )
         composeTestRule.setContent {
+            issuesText = stringResource(id = R.string.str_issues)
             MyWorkOptionsView(myWorkOptionsList = myWorkOptionsList)
         }
 
         composeTestRule.onNodeWithTag(testTag = MY_WORK_VIEW_TAG)
             .onChildren()
             .onFirst()
-            .assert(hasText("Issues"))
+            .assert(hasText(text = issuesText))
     }
 
     @Test
-    fun onAppLaunch_ifFavoriteRepoListAvailable() {
+    fun favoriteRepoListAvailable_onAppLaunch_listItemsAreVisible() {
         val starredRepoList = arrayListOf<RepositoryNode>()
         starredRepoList.add(RepositoryNode("", "Android", "", Owner("", "")))
         starredRepoList.add(RepositoryNode("", "iOS", "", Owner("", "")))
@@ -99,12 +108,14 @@ class HomeScreenTest {
 
         composeTestRule.onNodeWithTag(testTag = FAVORITE_REPO_VIEW_TAG)
             .onChildren()
-            .assertAny(hasText("Android"))
+            .assertAny(hasText(text = "Android"))
     }
 
     @Test
-    fun onAppLaunch_ifFavoriteRepoListNotAvailable() {
+    fun favoriteRepoListEmpty_onAppLaunch_listItemsAreNotVisible() {
+        var addFavoriteButtonText = ""
         composeTestRule.setContent {
+            addFavoriteButtonText = stringResource(id = R.string.str_add_favorite)
             FavoriteRepositoryView(starredRepoList = emptyList())
         }
 
@@ -112,15 +123,17 @@ class HomeScreenTest {
             .onChildren()
             .assertCountEquals(0)
 
-        composeTestRule.onNodeWithText(text = "ADD FAVORITES").assertExists()
+        composeTestRule.onNodeWithText(text = addFavoriteButtonText).assertExists()
     }
 
     @Test
     fun onAppLaunch_isShortCutsSectionVisible() {
+        var shortcutsText = ""
         composeTestRule.setContent {
+            shortcutsText = stringResource(id = R.string.str_shortcuts)
             HomeScreen(favoriteRepositoryState = UIState.Empty)
         }
 
-        composeTestRule.onNodeWithText("Shortcuts").assertExists()
+        composeTestRule.onNodeWithText(text = shortcutsText).assertExists()
     }
 }

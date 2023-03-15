@@ -8,6 +8,8 @@
     <string name="tab_profile">Profile</string>
     <string name="str_favorite">Favorites</string>
     <string name="str_add_favorite">ADD FAVORITES</string>
+    <string name="str_shortcuts">Shortcuts</string>
+    <string name="str_issues">Issues</string>
     <string name="home_toolbar_title">Home</string>
     <string name="str_my_work">My Work</string>
     <string name="things_you_need_one_tap_away">The things you need, one tap away</string>

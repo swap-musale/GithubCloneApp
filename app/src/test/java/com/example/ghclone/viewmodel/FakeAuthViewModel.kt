@@ -10,7 +10,6 @@ import com.example.ghclone.utils.UIState
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -66,7 +65,7 @@ class FakeAuthViewModel {
     }
 
     @Test
-    fun signInWithButtonClick_callAPI_ReturnsTrue() = runBlocking {
+    fun signInWithButtonClick_callAPI_ReturnsTrue() = runTest {
         authRepository = FakeAuthRepositoryImpl(shouldSucceed = true)
         val getIsLoggedInUseCase = GetIsLoggedInUseCase(authRepository = authRepository)
         val getTokenUseCase = GetTokenUseCase(authRepository = authRepository)
