@@ -1,4 +1,4 @@
-package com.example.githubcloneapp
+package com.example.ghclone
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

@@ -1,4 +1,4 @@
-package com.example.githubcloneapp.ui
+package com.example.ghclone.ui
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assert
